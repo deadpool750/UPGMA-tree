@@ -13,7 +13,7 @@ def upgma(matrix, labels):
     tree = {}
 
     while len(current_labels) > 1:
-        # Step 1: Find the closest pair
+        #1: find the closest pair
         min_dist = float("inf")
         i_min, j_min = -1, -1
         for i in range(len(current_matrix)):
@@ -22,21 +22,21 @@ def upgma(matrix, labels):
                     min_dist = current_matrix[i][j]
                     i_min, j_min = i, j
 
-        # Step 2: Create new merged label
+        #2: create new merged label
         label_i = current_labels[i_min]
         label_j = current_labels[j_min]
         new_label = f"({label_j},{label_i})"
         merge_distance = min_dist / 2
         tree[new_label] = (label_j, label_i, merge_distance)
 
-        # Step 3: Compute new row (average distance to others)
+        #3: compute new row (average distance to others)
         new_row = []
         for k in range(len(current_matrix)):
             if k != i_min and k != j_min:
                 d = (current_matrix[i_min][k] + current_matrix[j_min][k]) / 2
                 new_row.append(d)
 
-        # Step 4: Build new matrix and label list
+        #4: build new matrix and label list
         new_matrix = []
         new_labels = []
         for k in range(len(current_matrix)):
@@ -48,7 +48,7 @@ def upgma(matrix, labels):
                 new_matrix.append(row)
                 new_labels.append(current_labels[k])
 
-        # Add new cluster
+        #adding new cluster
         for idx, row in enumerate(new_matrix):
             row.append(new_row[idx])
         new_row.append(0.0)
